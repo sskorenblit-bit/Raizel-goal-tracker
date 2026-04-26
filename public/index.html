@@ -1,0 +1,3540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raizel's Goals 💫</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="firebase-config.js"></script>
+<style>
+  :root {
+    --pink: #ec4899;
+    --pink-soft: #fbcfe8;
+    --pink-bg: #fdf2f8;
+    --purple: #a855f7;
+    --purple-soft: #e9d5ff;
+    --lavender: #f3e8ff;
+    --gold: #fbbf24;
+    --gold-soft: #fef3c7;
+    --mint: #86efac;
+    --mint-soft: #dcfce7;
+    --peach: #fdba74;
+    --cream: #fffbeb;
+    --text: #4a1d5f;
+    --text-soft: #9333ea;
+    --white: #ffffff;
+    --red: #f87171;
+    --red-soft: #fecaca;
+    --yellow: #fde047;
+    --yellow-soft: #fef9c3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(160deg, #fdf2f8 0%, #fce7f3 40%, #f3e8ff 100%);
+    min-height: 100vh;
+    color: var(--text);
+    padding: 16px 14px 100px;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Decorative background sparkles */
+  body::before {
+    content: '✨';
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    font-size: 1.5rem;
+    opacity: 0.3;
+    animation: twinkle 3s infinite;
+  }
+  body::after {
+    content: '💖';
+    position: fixed;
+    bottom: 15%;
+    left: 8%;
+    font-size: 1.2rem;
+    opacity: 0.25;
+    animation: twinkle 4s infinite 1s;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.15); }
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    text-align: center;
+    padding: 18px 0 14px;
+    position: relative;
+  }
+
+  .header h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .header .date {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* ============ DATE NAVIGATOR ============ */
+  .date-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    border-radius: 16px;
+    padding: 8px 10px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(168, 85, 247, 0.08);
+    border: 1.5px solid var(--purple-soft);
+    gap: 8px;
+  }
+
+  .date-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: var(--lavender);
+    color: var(--purple);
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .date-nav-btn:hover:not(:disabled) {
+    background: var(--purple-soft);
+    transform: scale(1.05);
+  }
+
+  .date-nav-btn:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .date-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .date-nav-display {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 10px;
+    transition: background 0.15s;
+  }
+
+  .date-nav-display:hover {
+    background: var(--pink-bg);
+  }
+
+  .date-nav-day {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--text);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .date-nav-full {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .date-nav.editing-past {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-color: var(--gold);
+  }
+
+  .date-nav.editing-past .date-nav-day {
+    color: #92400e;
+  }
+
+  .editing-past-badge {
+    display: none;
+    background: #92400e;
+    color: white;
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    margin-top: 2px;
+  }
+
+  .date-nav.editing-past .editing-past-badge {
+    display: inline-block;
+  }
+
+  /* ============ STATS BAR ============ */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 18px;
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(236, 72, 153, 0.08);
+    border: 1.5px solid var(--pink-soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card.money {
+    background: linear-gradient(135deg, #fef3c7, #fef9c3);
+    border-color: var(--gold);
+  }
+
+  .stat-card.streak {
+    background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+    border-color: var(--pink);
+  }
+
+  .stat-card.badges {
+    background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+    border-color: var(--purple);
+  }
+
+  .stat-icon {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--text-soft);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* ============ TABS ============ */
+  .tabs {
+    display: flex;
+    background: white;
+    border-radius: 16px;
+    padding: 4px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 12px rgba(168, 85, 247, 0.08);
+    border: 1.5px solid var(--purple-soft);
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px 4px;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.25);
+  }
+
+  /* ============ SECTIONS ============ */
+  .section {
+    background: white;
+    border-radius: 22px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.06);
+    border: 1.5px solid rgba(233, 213, 255, 0.6);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .section-icon.morning { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+  .section-icon.school { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+  .section-icon.shabbat { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+  .section-icon.sunday { background: linear-gradient(135deg, #fed7aa, #fdba74); }
+  .section-icon.coping { background: linear-gradient(135deg, #dbeafe, #e0f2fe); }
+  .section-icon.afterschool { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+  .section-icon.evening { background: linear-gradient(135deg, #e9d5ff, #ddd6fe); }
+  .section-icon.bedtime { background: linear-gradient(135deg, #c7d2fe, #a5b4fc); }
+  .section-icon.kind { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+
+  .section-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .section-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    font-weight: 600;
+  }
+
+  /* ============ BEHAVIOR ITEMS ============ */
+  .behavior {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+    background: var(--pink-bg);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid transparent;
+    user-select: none;
+  }
+
+  .behavior:hover {
+    background: #fce7f3;
+    transform: translateX(2px);
+  }
+
+  .behavior.done {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-color: var(--mint);
+  }
+
+  .checkbox {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2.5px solid var(--pink-soft);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  .behavior.done .checkbox {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-color: #16a34a;
+    color: white;
+    transform: scale(1.1);
+  }
+
+  .checkmark {
+    opacity: 0;
+    transition: opacity 0.2s 0.1s;
+  }
+
+  .behavior.done .checkmark {
+    opacity: 1;
+  }
+
+  .behavior-text {
+    flex: 1;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .behavior-value {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--gold-soft);
+    color: #b45309;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .behavior.done .behavior-value {
+    background: rgba(22, 163, 74, 0.15);
+    color: #15803d;
+  }
+
+  /* Bonus/optional behavior styling */
+  .behavior.bonus {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1.5px dashed #f59e0b;
+  }
+
+  .behavior.bonus:hover {
+    background: linear-gradient(135deg, #fde68a, #fcd34d);
+  }
+
+  .behavior.bonus.done {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-color: var(--mint);
+  }
+
+  .behavior.bonus .behavior-value {
+    background: #f59e0b;
+    color: white;
+  }
+
+  /* ============ SETTINGS ============ */
+  .settings-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--pink-bg);
+    border-radius: 12px;
+    margin-bottom: 6px;
+  }
+
+  .settings-row-emoji {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .settings-row-text {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 0;
+  }
+
+  .settings-price-input {
+    width: 80px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1.5px solid var(--pink-soft);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    background: white;
+    text-align: right;
+    outline: none;
+  }
+
+  .settings-price-input:focus {
+    border-color: var(--pink);
+  }
+
+  .settings-name-input {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1.5px solid var(--pink-soft);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    background: white;
+    outline: none;
+    min-width: 0;
+  }
+
+  .settings-name-input:focus {
+    border-color: var(--pink);
+  }
+
+  .settings-row-delete {
+    background: none;
+    border: none;
+    color: #d8b4d8;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 4px 6px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .settings-row-delete:hover {
+    color: #ef4444;
+  }
+
+  .settings-stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--pink-bg);
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .settings-stat-value {
+    color: var(--purple);
+    font-weight: 700;
+  }
+
+  /* ============ PARENT ACCESS ============ */
+  .parent-access-btn {
+    display: block;
+    margin: 30px auto 10px;
+    padding: 8px 20px;
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    color: var(--text-soft);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .parent-access-btn:hover {
+    background: rgba(168, 85, 247, 0.15);
+    color: var(--purple);
+  }
+
+  /* Show settings tab content only when unlocked */
+  #tab-settings {
+    display: none !important;
+  }
+
+  #tab-settings.active.parent-unlocked {
+    display: block !important;
+  }
+
+  /* PIN modal */
+  .pin-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 28px;
+    padding: 28px 24px;
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
+    z-index: 200;
+    width: 90%;
+    max-width: 340px;
+    display: none;
+    text-align: center;
+    border: 2px solid var(--purple-soft);
+  }
+
+  .pin-modal.show { display: block; }
+
+  .pin-icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+  }
+
+  .pin-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pin-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .pin-display {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .pin-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--lavender);
+    border: 2px solid var(--purple-soft);
+    transition: all 0.2s;
+  }
+
+  .pin-dot.filled {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    border-color: var(--purple);
+    transform: scale(1.15);
+  }
+
+  .pin-error {
+    font-size: 0.85rem;
+    color: #dc2626;
+    font-weight: 700;
+    height: 20px;
+    margin-bottom: 8px;
+  }
+
+  .pin-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .pin-btn {
+    width: 100%;
+    aspect-ratio: 1.5;
+    border-radius: 14px;
+    border: none;
+    background: var(--pink-bg);
+    color: var(--text);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pin-btn:hover {
+    background: var(--pink-soft);
+    transform: scale(1.03);
+  }
+
+  .pin-btn:active {
+    transform: scale(0.95);
+  }
+
+  .pin-btn-cancel {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  .pin-btn-cancel:hover {
+    background: #fecaca;
+  }
+
+  .pin-btn-clear {
+    background: var(--lavender);
+    color: var(--purple);
+    font-size: 1.1rem;
+  }
+
+  .pin-btn-clear:hover {
+    background: var(--purple-soft);
+  }
+
+  /* Settings PIN change section */
+  .pin-change-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .pin-change-row input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--pink-soft);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    background: white;
+    text-align: center;
+    letter-spacing: 0.3em;
+    outline: none;
+  }
+
+  .pin-change-row input:focus {
+    border-color: var(--pink);
+  }
+
+  /* Lock icon next to settings tab when in parent mode */
+  .parent-mode-banner {
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    display: none;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.25);
+  }
+
+  .parent-mode-banner.show { display: block; }
+
+  .parent-mode-banner button {
+    background: rgba(255,255,255,0.25);
+    border: none;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .parent-mode-banner button:hover {
+    background: rgba(255,255,255,0.35);
+  }
+
+  /* Sync indicator */
+  .sync-indicator {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.95);
+    color: var(--text-soft);
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
+    z-index: 50;
+    transition: opacity 0.3s, transform 0.3s;
+    border: 1px solid var(--purple-soft);
+  }
+
+  .sync-indicator.syncing {
+    color: var(--pink);
+  }
+
+  .sync-indicator.error {
+    color: #dc2626;
+    background: #fef2f2;
+    border-color: #fca5a5;
+  }
+
+  .sync-indicator.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+
+  .behavior-bonus-tag {
+    font-size: 0.55rem;
+    background: #f59e0b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ============ SCHOOL DAY RATING ============ */
+  .school-rating-container {
+    padding: 8px 0 4px;
+  }
+
+  .school-question {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .rating-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .rating-btn {
+    padding: 14px 8px;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    background: white;
+    font-weight: 700;
+  }
+
+  .rating-btn.green {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-color: #bbf7d0;
+  }
+  .rating-btn.yellow {
+    background: linear-gradient(135deg, #fef9c3, #fef08a);
+    border-color: #fef08a;
+  }
+  .rating-btn.red {
+    background: linear-gradient(135deg, #fecaca, #fca5a5);
+    border-color: #fca5a5;
+  }
+
+  .rating-btn.selected.green { border-color: #16a34a; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); transform: scale(1.05); }
+  .rating-btn.selected.yellow { border-color: #ca8a04; box-shadow: 0 4px 12px rgba(202, 138, 4, 0.25); transform: scale(1.05); }
+  .rating-btn.selected.red { border-color: #dc2626; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); transform: scale(1.05); }
+
+  .rating-emoji {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .rating-label {
+    font-size: 0.75rem;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .rating-value {
+    font-size: 0.65rem;
+    color: var(--text-soft);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  .hard-class-toggle {
+    background: var(--lavender);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid transparent;
+  }
+
+  .hard-class-toggle.active {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-color: var(--gold);
+  }
+
+  .hard-class-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hard-class-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .hard-class-sub {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    font-weight: 600;
+  }
+
+  .toggle-switch {
+    width: 42px;
+    height: 24px;
+    background: #d1d5db;
+    border-radius: 20px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .hard-class-toggle.active .toggle-switch {
+    background: var(--gold);
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  .hard-class-toggle.active .toggle-switch::after {
+    left: 20px;
+  }
+
+  /* ============ REWARDS TAB ============ */
+  .rewards-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .rewards-balance {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 24px;
+    padding: 24px;
+    border: 2px solid var(--gold);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .balance-label {
+    font-size: 0.75rem;
+    color: #92400e;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .balance-amount {
+    font-family: 'Caveat', cursive;
+    font-size: 3.5rem;
+    color: #b45309;
+    font-weight: 700;
+    line-height: 1;
+    margin: 4px 0;
+  }
+
+  .reward-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: white;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    border: 1.5px solid var(--pink-soft);
+    box-shadow: 0 2px 10px rgba(236, 72, 153, 0.06);
+  }
+
+  .reward-emoji {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--pink-bg), var(--lavender));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .reward-info {
+    flex: 1;
+  }
+
+  .reward-name {
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .reward-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--pink-bg);
+    border-radius: 10px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+
+  .reward-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+    border-radius: 10px;
+    transition: width 0.5s;
+  }
+
+  .reward-cost {
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* ============ BADGES TAB ============ */
+  .badges-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .badge {
+    background: white;
+    border-radius: 18px;
+    padding: 14px 8px;
+    text-align: center;
+    border: 1.5px solid var(--purple-soft);
+    transition: all 0.2s;
+  }
+
+  .badge.earned {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-color: var(--gold);
+    box-shadow: 0 4px 14px rgba(251, 191, 36, 0.2);
+  }
+
+  .badge:not(.earned) {
+    opacity: 0.45;
+    filter: grayscale(0.7);
+  }
+
+  .badge-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .badge-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .badge-req {
+    font-size: 0.6rem;
+    color: var(--text-soft);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* ============ CELEBRATION ============ */
+  .celebration {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 28px;
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3);
+    z-index: 100;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 3px solid var(--gold);
+    max-width: 320px;
+    width: 85%;
+    display: none;
+  }
+
+  .celebration.show { display: block; }
+
+  @keyframes popIn {
+    from { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+
+  .celebration-icon {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+  }
+
+  .celebration-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: var(--pink);
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+
+  .celebration-text {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .celebration-btn {
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 14px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3);
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(74, 29, 95, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 99;
+    display: none;
+  }
+
+  .overlay.show { display: block; }
+
+  /* ============ EMPTY STATE FOR TABS ============ */
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .dinner-hint {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    font-style: italic;
+    margin-top: 6px;
+    padding-left: 4px;
+    font-weight: 500;
+  }
+
+  /* ============ BEDTIME BONUS ============ */
+  .bedtime-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .bedtime-btn {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 16px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .bedtime-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+  }
+
+  .bedtime-btn.selected {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border-color: #4338ca;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+    transform: scale(1.02);
+  }
+
+  .bedtime-btn.selected .bedtime-time,
+  .bedtime-btn.selected .bedtime-label,
+  .bedtime-btn.selected .bedtime-value {
+    color: white;
+  }
+
+  .bedtime-time {
+    font-family: 'Caveat', cursive;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #4338ca;
+    line-height: 1;
+  }
+
+  .bedtime-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4338ca;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .bedtime-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #b45309;
+    margin-top: 6px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 3px 10px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+
+  .bedtime-btn.selected .bedtime-value {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .kind-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 14px;
+    border: 1.5px solid var(--pink-soft);
+  }
+
+  .kind-status-item {
+    text-align: center;
+    flex: 1;
+  }
+
+  .kind-status-count {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: var(--pink);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .kind-status-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #be185d;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .kind-status-divider {
+    width: 1.5px;
+    height: 36px;
+    background: var(--pink-soft);
+  }
+
+  .kind-today-entries {
+    margin-top: 12px;
+  }
+
+  .kind-entry {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-top: 8px;
+    border: 1.5px solid var(--pink-soft);
+    position: relative;
+  }
+
+  .kind-entry-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--text);
+    line-height: 1.3;
+    font-weight: 500;
+    padding-right: 50px;
+  }
+
+  .kind-entry-actions {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    gap: 2px;
+  }
+
+  .kind-entry-edit,
+  .kind-entry-delete {
+    background: none;
+    border: none;
+    color: #d8b4d8;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .kind-entry-edit:hover {
+    color: var(--purple);
+    background: var(--lavender);
+  }
+
+  .kind-entry-delete:hover {
+    color: var(--pink);
+    background: var(--pink-bg);
+  }
+
+  .kindness-journal {
+    margin-top: 14px;
+    padding: 14px;
+    background: linear-gradient(135deg, #fef3c7, #fce7f3);
+    border-radius: 16px;
+    border: 1.5px dashed var(--pink);
+  }
+
+  .kindness-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .kindness-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid var(--pink-soft);
+    background: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .kindness-input:focus {
+    border-color: var(--pink);
+  }
+
+  .kindness-input::placeholder {
+    color: #d8b4d8;
+    font-style: italic;
+  }
+
+  .kindness-save-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.15s;
+    box-shadow: 0 3px 10px rgba(236, 72, 153, 0.25);
+  }
+
+  .kindness-save-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .kindness-save-btn:active {
+    transform: translateY(0);
+  }
+
+  .kindness-saved-msg {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #16a34a;
+    font-weight: 700;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .kindness-saved-msg.show {
+    opacity: 1;
+  }
+
+  /* ============ JOURNAL LIST ============ */
+  .journal-entry {
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 14px rgba(236, 72, 153, 0.08);
+    border: 1.5px solid var(--pink-soft);
+    position: relative;
+  }
+
+  .journal-date {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .journal-date::before {
+    content: '💜';
+    font-size: 0.9rem;
+  }
+
+  .journal-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.35rem;
+    color: var(--text);
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .journal-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-soft);
+  }
+
+  .journal-empty-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+
+  .journal-empty-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .journal-delete {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #d8b4d8;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: color 0.2s;
+  }
+
+  .journal-delete:hover {
+    color: var(--pink);
+  }
+
+  /* ============ COPING SKILLS ============ */
+  .coping-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 14px;
+    border: 1.5px solid #bfdbfe;
+  }
+
+  .coping-status-item {
+    text-align: center;
+    flex: 1;
+  }
+
+  .coping-status-count {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: #1e40af;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .coping-status-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .coping-status-divider {
+    width: 1.5px;
+    height: 36px;
+    background: #bfdbfe;
+  }
+
+  .coping-form {
+    background: #f0f9ff;
+    border-radius: 16px;
+    padding: 14px;
+    border: 1.5px dashed #93c5fd;
+  }
+
+  .coping-form-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .coping-field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+
+  .coping-field-label:first-of-type {
+    margin-top: 0;
+  }
+
+  .coping-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1.5px solid #bfdbfe;
+    background: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .coping-input:focus {
+    border-color: #3b82f6;
+  }
+
+  .coping-input::placeholder {
+    color: #a5b4d0;
+    font-style: italic;
+  }
+
+  .coping-skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .coping-chip {
+    background: white;
+    border: 1.5px solid #bfdbfe;
+    color: #1e40af;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .coping-chip:hover {
+    background: #dbeafe;
+    transform: translateY(-1px);
+  }
+
+  .coping-chip.selected {
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: white;
+    border-color: #3b82f6;
+  }
+
+  .coping-save-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.2s;
+    box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+  }
+
+  .coping-save-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .coping-save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .coping-saved-msg {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #16a34a;
+    font-weight: 700;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .coping-saved-msg.show {
+    opacity: 1;
+  }
+
+  .coping-max-msg {
+    text-align: center;
+    padding: 14px;
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-radius: 14px;
+    font-weight: 700;
+    color: #15803d;
+    border: 1.5px solid #86efac;
+  }
+
+  .coping-today-entries {
+    margin-top: 12px;
+  }
+
+  .coping-entry {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-top: 8px;
+    border: 1.5px solid #dbeafe;
+    position: relative;
+  }
+
+  .coping-entry-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #1e40af;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+
+  .coping-entry-text {
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .coping-entry-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .coping-entry-actions {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    gap: 2px;
+  }
+
+  .coping-entry-edit,
+  .coping-entry-delete {
+    background: none;
+    border: none;
+    color: #a5b4d0;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .coping-entry-edit:hover {
+    color: #3b82f6;
+    background: #eff6ff;
+  }
+
+  .coping-entry-delete:hover {
+    color: #ef4444;
+    background: #fef2f2;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Raizel's Goals 💫</h1>
+</div>
+
+<!-- Date Navigator -->
+<div class="date-nav" id="date-nav-container">
+  <button class="date-nav-btn" onclick="changeDay(-1)" title="Previous day">‹</button>
+  <div class="date-nav-display" onclick="jumpToToday()">
+    <div class="date-nav-day" id="date-nav-day">Today</div>
+    <div class="date-nav-full" id="date-nav-full"></div>
+    <span class="editing-past-badge">✎ Editing</span>
+  </div>
+  <button class="date-nav-btn" id="date-nav-next" onclick="changeDay(1)" title="Next day">›</button>
+</div>
+
+<!-- Parent mode banner -->
+<div class="parent-mode-banner" id="parent-banner">
+  👤 Parent Mode 
+  <button onclick="signOutUser()" style="margin-left: 6px;">Sign Out</button>
+  <button onclick="lockParentMode()">Lock 🔒</button>
+</div>
+
+<!-- Sync indicator -->
+<div class="sync-indicator" id="sync-indicator">☁️ Synced</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-card money">
+    <span class="stat-icon">💰</span>
+    <div class="stat-value" id="stat-money">$0.00</div>
+    <div class="stat-label">Earned</div>
+  </div>
+  <div class="stat-card streak">
+    <span class="stat-icon">🔥</span>
+    <div class="stat-value" id="stat-streak">0</div>
+    <div class="stat-label">Day Streak</div>
+  </div>
+  <div class="stat-card badges">
+    <span class="stat-icon">🏆</span>
+    <div class="stat-value" id="stat-badges">0</div>
+    <div class="stat-label">Badges</div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" data-tab="today">Today</div>
+  <div class="tab" data-tab="journal">Journal</div>
+  <div class="tab" data-tab="rewards">Rewards</div>
+  <div class="tab" data-tab="badges">Badges</div>
+</div>
+
+<!-- TODAY TAB -->
+<div class="tab-content active" id="tab-today">
+
+  <!-- Morning Me -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon morning">🌅</div>
+      <div>
+        <div class="section-title">Morning Me</div>
+        <div class="section-subtitle">Start the day strong</div>
+      </div>
+    </div>
+    <div id="morning-items"></div>
+  </div>
+
+  <!-- School Me -->
+  <div class="section" id="school-section">
+    <div class="section-header">
+      <div class="section-icon school">🏫</div>
+      <div>
+        <div class="section-title">School Me</div>
+        <div class="section-subtitle">How was your school day?</div>
+      </div>
+    </div>
+    <div class="school-rating-container">
+      <div class="rating-options">
+        <div class="rating-btn green" data-rating="green">
+          <span class="rating-emoji">🌟</span>
+          <div class="rating-label">Great!</div>
+          <div class="rating-value" id="rating-value-green">$1.00</div>
+        </div>
+        <div class="rating-btn yellow" data-rating="yellow">
+          <span class="rating-emoji">😊</span>
+          <div class="rating-label">Okay</div>
+          <div class="rating-value" id="rating-value-yellow">$0.50</div>
+        </div>
+        <div class="rating-btn red" data-rating="red">
+          <span class="rating-emoji">🫂</span>
+          <div class="rating-label">Hard Day</div>
+          <div class="rating-value" id="rating-value-red">$0.25</div>
+        </div>
+      </div>
+      <div class="hard-class-toggle" id="not-sent-out-toggle" style="margin-bottom: 10px;">
+        <div class="hard-class-text">
+          <div class="hard-class-title">🏆 Not Sent Out All Day</div>
+          <div class="hard-class-sub">Stayed in every class today! +$0.75</div>
+        </div>
+        <div class="toggle-switch"></div>
+      </div>
+      <div class="hard-class-toggle" id="math-toggle" style="margin-bottom: 10px;">
+        <div class="hard-class-text">
+          <div class="hard-class-title">🔢 Math Win</div>
+          <div class="hard-class-sub" id="math-sub">Got through math today! +$0.50</div>
+        </div>
+        <div class="toggle-switch"></div>
+      </div>
+      <div class="hard-class-toggle" id="music-toggle" style="display:none;">
+        <div class="hard-class-text">
+          <div class="hard-class-title">🎵 Music Win</div>
+          <div class="hard-class-sub" id="music-sub">Got through music today! +$0.50</div>
+        </div>
+        <div class="toggle-switch"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekend Me (Saturday) -->
+  <div class="section" id="shabbat-section" style="display:none;">
+    <div class="section-header">
+      <div class="section-icon shabbat">🕯️</div>
+      <div>
+        <div class="section-title">Shabbat Me</div>
+        <div class="section-subtitle">Special Shabbat behaviors</div>
+      </div>
+    </div>
+    <div id="shabbat-items"></div>
+  </div>
+
+  <!-- Sunday Me -->
+  <div class="section" id="sunday-section" style="display:none;">
+    <div class="section-header">
+      <div class="section-icon sunday">☀️</div>
+      <div>
+        <div class="section-title">Sunday Me</div>
+        <div class="section-subtitle">Sunday-only behaviors</div>
+      </div>
+    </div>
+    <div id="sunday-items"></div>
+  </div>
+
+  <!-- Kind Me (moved before Coping) -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon kind">💛</div>
+      <div>
+        <div class="section-title">Kind Me</div>
+        <div class="section-subtitle">Up to 3 kind things a day</div>
+      </div>
+    </div>
+
+    <div class="kind-status">
+      <div class="kind-status-item">
+        <div class="kind-status-count" id="kind-count">0</div>
+        <div class="kind-status-label">of 3 today</div>
+      </div>
+      <div class="kind-status-divider"></div>
+      <div class="kind-status-item">
+        <div class="kind-status-count" id="kind-earned">$0.00</div>
+        <div class="kind-status-label">earned (max $1.50)</div>
+      </div>
+    </div>
+
+    <div class="kindness-journal" id="kindness-journal-entry">
+      <label class="kindness-label">✨ What kind thing did you do?</label>
+      <textarea 
+        id="kindness-text" 
+        class="kindness-input" 
+        placeholder="I helped my brother... I said something nice to... I shared my..."
+        rows="3"
+      ></textarea>
+      <button class="kindness-save-btn" onclick="saveKindness()">💜 Log It (+$0.50)</button>
+      <div class="kindness-saved-msg" id="kindness-saved-msg">Saved! 🎉</div>
+    </div>
+
+    <div class="coping-max-msg" id="kind-max-msg" style="display:none;">
+      🌟 You logged 3 kind things — wow!
+      <div style="margin-top:10px; font-size:0.75rem; font-weight:600; opacity:0.8;">
+        Need to edit? Tap an entry below or 
+        <button onclick="resetKindForDay()" style="background:none; border:none; color:#15803d; text-decoration:underline; cursor:pointer; font-weight:700; font-family:inherit; font-size:inherit;">reset this day's kindness</button>
+      </div>
+    </div>
+
+    <div class="kind-today-entries" id="kind-today-entries"></div>
+  </div>
+
+  <!-- Coping Skills -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon coping">🧘‍♀️</div>
+      <div>
+        <div class="section-title">Coping Skills</div>
+        <div class="section-subtitle">Used a skill when I felt frustrated</div>
+      </div>
+    </div>
+
+    <div class="coping-status">
+      <div class="coping-status-item">
+        <div class="coping-status-count" id="coping-count">0</div>
+        <div class="coping-status-label">of 3 used today</div>
+      </div>
+      <div class="coping-status-divider"></div>
+      <div class="coping-status-item">
+        <div class="coping-status-count" id="coping-earned">$0.00</div>
+        <div class="coping-status-label">earned (max $1.50)</div>
+      </div>
+    </div>
+
+    <div class="coping-form" id="coping-form">
+      <div class="coping-form-title">✨ Log a coping skill</div>
+      <label class="coping-field-label">What was the frustration?</label>
+      <textarea 
+        id="frustration-text" 
+        class="coping-input" 
+        placeholder="My brother took my toy... I couldn't figure out my homework..."
+        rows="2"
+      ></textarea>
+      <label class="coping-field-label">What coping skill did you use?</label>
+      <div class="coping-skill-chips" id="coping-skill-chips"></div>
+      <textarea 
+        id="coping-skill-text" 
+        class="coping-input" 
+        placeholder="Pick one above or write your own..."
+        rows="2"
+      ></textarea>
+      <button class="coping-save-btn" onclick="saveCopingEntry()">💙 Log It (+$0.50)</button>
+      <div class="coping-saved-msg" id="coping-saved-msg">Saved! 🎉</div>
+    </div>
+
+    <div class="coping-max-msg" id="coping-max-msg" style="display:none;">
+      🌟 You've logged 3 today — amazing job!
+      <div style="margin-top:10px; font-size:0.75rem; font-weight:600; opacity:0.8;">
+        Need to edit? Tap an entry below or 
+        <button onclick="resetCopingForDay()" style="background:none; border:none; color:#15803d; text-decoration:underline; cursor:pointer; font-weight:700; font-family:inherit; font-size:inherit;">reset this day's coping</button>
+      </div>
+    </div>
+
+    <div class="coping-today-entries" id="coping-today-entries"></div>
+  </div>
+
+  <!-- After School Me -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon afterschool">📚</div>
+      <div>
+        <div class="section-title">After School Me</div>
+        <div class="section-subtitle">Independent & awesome</div>
+      </div>
+    </div>
+    <div id="afterschool-items"></div>
+  </div>
+
+  <!-- Evening Me -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon evening">🌙</div>
+      <div>
+        <div class="section-title">Evening Me</div>
+        <div class="section-subtitle">Wind down with wins</div>
+      </div>
+    </div>
+    <div id="evening-items"></div>
+    <div class="dinner-hint">💜 Dinner is the hardest — you've got this!</div>
+  </div>
+
+  <!-- Bedtime Bonus -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon bedtime">🌜</div>
+      <div>
+        <div class="section-title">Bedtime Bonus</div>
+        <div class="section-subtitle">In bed on time = bonus money</div>
+      </div>
+    </div>
+    <div class="bedtime-options">
+      <div class="bedtime-btn" data-time="early">
+        <div class="bedtime-time">8:30 PM</div>
+        <div class="bedtime-label">In bed early</div>
+        <div class="bedtime-value">+$1.50</div>
+      </div>
+      <div class="bedtime-btn" data-time="ontime">
+        <div class="bedtime-time">9:00 PM</div>
+        <div class="bedtime-label">On time</div>
+        <div class="bedtime-value">+$0.75</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- JOURNAL TAB -->
+<div class="tab-content" id="tab-journal">
+  <div style="text-align: center; margin-bottom: 18px;">
+    <div style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--text); line-height: 1;">My Kindness Journal 💜</div>
+    <div style="font-size: 0.8rem; color: var(--text-soft); font-weight: 600; margin-top: 4px;">Look back at all the kind things you've done</div>
+  </div>
+  <div id="journal-list"></div>
+</div>
+
+<!-- REWARDS TAB -->
+<div class="tab-content" id="tab-rewards">
+  <div class="rewards-balance">
+    <div class="balance-label">My Piggy Bank</div>
+    <div class="balance-amount" id="balance-amount">$0.00</div>
+    <div style="font-size: 0.8rem; color: #92400e; font-weight: 600;">Keep saving! ✨</div>
+  </div>
+  <div id="rewards-list"></div>
+</div>
+
+<!-- BADGES TAB -->
+<div class="tab-content" id="tab-badges">
+  <div style="text-align: center; margin-bottom: 16px;">
+    <div style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--text);">My Badge Collection 🏆</div>
+    <div style="font-size: 0.8rem; color: var(--text-soft); font-weight: 600;">Earn badges by keeping streaks!</div>
+  </div>
+  <div class="badges-grid" id="badges-grid"></div>
+</div>
+
+<!-- SETTINGS TAB (hidden behind parent PIN) -->
+<div class="tab-content" id="tab-settings">
+  <div style="text-align: center; margin-bottom: 18px;">
+    <div style="font-family: 'Caveat', cursive; font-size: 2rem; color: var(--text); line-height: 1;">Settings & Prices ⚙️</div>
+    <div style="font-size: 0.8rem; color: var(--text-soft); font-weight: 600; margin-top: 4px;">Edit values, rewards, and reset data</div>
+  </div>
+
+  <!-- Behavior Prices -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">💰</div>
+      <div>
+        <div class="section-title">Daily Behavior Prices</div>
+        <div class="section-subtitle">Edit how much each behavior pays</div>
+      </div>
+    </div>
+    <div id="settings-behaviors-list"></div>
+  </div>
+
+  <!-- Bonus Prices -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: linear-gradient(135deg, #e9d5ff, #ddd6fe);">🎁</div>
+      <div>
+        <div class="section-title">Bonus Prices</div>
+        <div class="section-subtitle">Special bonuses and ratings</div>
+      </div>
+    </div>
+    <div id="settings-bonuses-list"></div>
+  </div>
+
+  <!-- Reward Items -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: linear-gradient(135deg, #fce7f3, #fbcfe8);">🏆</div>
+      <div>
+        <div class="section-title">Reward Shop Items</div>
+        <div class="section-subtitle">Edit prices or add new rewards</div>
+      </div>
+    </div>
+    <div id="settings-rewards-list"></div>
+    <button class="kindness-save-btn" style="margin-top: 12px;" onclick="addNewReward()">➕ Add New Reward</button>
+  </div>
+
+  <!-- Stats Summary -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: linear-gradient(135deg, #dcfce7, #bbf7d0);">📊</div>
+      <div>
+        <div class="section-title">Account Stats</div>
+        <div class="section-subtitle">Lifetime totals</div>
+      </div>
+    </div>
+    <div id="settings-stats"></div>
+  </div>
+
+  <!-- Change PIN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background: linear-gradient(135deg, #e9d5ff, #ddd6fe);">🔑</div>
+      <div>
+        <div class="section-title">Change Parent PIN</div>
+        <div class="section-subtitle">4-digit PIN to access this dashboard</div>
+      </div>
+    </div>
+    <div class="pin-change-row">
+      <input type="password" id="new-pin" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="••••">
+      <button class="kindness-save-btn" style="flex:0 0 auto; padding: 10px 18px;" onclick="changePIN()">Save</button>
+    </div>
+  </div>
+
+  <!-- Danger Zone -->
+  <div class="section" style="border-color: #fca5a5; background: #fff5f5;">
+    <div class="section-header">
+      <div class="section-icon" style="background: linear-gradient(135deg, #fecaca, #fca5a5);">⚠️</div>
+      <div>
+        <div class="section-title" style="color: #b91c1c;">Danger Zone</div>
+        <div class="section-subtitle">Resets cannot be undone</div>
+      </div>
+    </div>
+    <button class="kindness-save-btn" style="background: #ef4444; margin-bottom: 8px;" onclick="resetAllData()">🗑️ Reset Everything</button>
+    <div style="font-size: 0.7rem; color: #991b1b; text-align: center; font-weight: 600;">Wipes all entries, balances, streaks, and badges</div>
+  </div>
+</div>
+
+<!-- Celebration modal -->
+<div class="overlay" id="overlay"></div>
+<div class="celebration" id="celebration">
+  <div class="celebration-icon" id="celebration-icon">🎉</div>
+  <div class="celebration-title" id="celebration-title">Amazing!</div>
+  <div class="celebration-text" id="celebration-text">You earned some money!</div>
+  <button class="celebration-btn" onclick="closeCelebration()">Yay! ✨</button>
+</div>
+
+<!-- Parent access button (small, discreet) -->
+<button class="parent-access-btn" onclick="openParentPIN()">👤 Parent</button>
+
+<!-- PIN entry modal -->
+<div class="overlay" id="pin-overlay"></div>
+<div class="pin-modal" id="pin-modal">
+  <div class="pin-icon">🔒</div>
+  <div class="pin-title">Parent Access</div>
+  <div class="pin-subtitle">Enter your 4-digit PIN</div>
+  <div class="pin-display" id="pin-display">
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+  </div>
+  <div class="pin-error" id="pin-error"></div>
+  <div class="pin-pad">
+    <button class="pin-btn" onclick="enterPIN('1')">1</button>
+    <button class="pin-btn" onclick="enterPIN('2')">2</button>
+    <button class="pin-btn" onclick="enterPIN('3')">3</button>
+    <button class="pin-btn" onclick="enterPIN('4')">4</button>
+    <button class="pin-btn" onclick="enterPIN('5')">5</button>
+    <button class="pin-btn" onclick="enterPIN('6')">6</button>
+    <button class="pin-btn" onclick="enterPIN('7')">7</button>
+    <button class="pin-btn" onclick="enterPIN('8')">8</button>
+    <button class="pin-btn" onclick="enterPIN('9')">9</button>
+    <button class="pin-btn pin-btn-cancel" onclick="closeParentPIN()">✕</button>
+    <button class="pin-btn" onclick="enterPIN('0')">0</button>
+    <button class="pin-btn pin-btn-clear" onclick="clearPIN()">⌫</button>
+  </div>
+  <div style="margin-top:14px; font-size:0.7rem; color:var(--text-soft); text-align:center; font-weight:600;">
+    Default PIN is <strong>1234</strong> (you can change it in settings)
+  </div>
+</div>
+
+<script type="module">
+/* ============ FIREBASE SETUP ============ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+
+let currentUser = null;
+let userDocRef = null;
+let saveTimer = null;
+let isInitialLoad = true;
+let unsubscribeFromDoc = null;
+
+// Redirect to login if not authenticated
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+  currentUser = user;
+  userDocRef = doc(db, 'users', user.uid);
+  await loadStateFromFirebase();
+  // Listen for changes from other devices
+  unsubscribeFromDoc = onSnapshot(userDocRef, (snap) => {
+    if (snap.exists() && !isInitialLoad) {
+      // Only update if this is from another device (debounce concern)
+      const data = snap.data();
+      if (data && data._lastSavedBy !== getDeviceId()) {
+        applyLoadedState(data);
+        renderAll();
+      }
+    }
+  });
+});
+
+function getDeviceId() {
+  let id = localStorage.getItem('deviceId');
+  if (!id) {
+    id = 'device_' + Math.random().toString(36).slice(2) + Date.now();
+    localStorage.setItem('deviceId', id);
+  }
+  return id;
+}
+
+window.signOutUser = async function() {
+  if (unsubscribeFromDoc) unsubscribeFromDoc();
+  await signOut(auth);
+  window.location.href = 'login.html';
+};
+
+/* ============ SYNC INDICATOR ============ */
+function showSyncStatus(status) {
+  const indicator = document.getElementById('sync-indicator');
+  if (!indicator) return;
+  indicator.classList.remove('syncing', 'error', 'hidden');
+  if (status === 'syncing') {
+    indicator.textContent = '☁️ Syncing...';
+    indicator.classList.add('syncing');
+  } else if (status === 'synced') {
+    indicator.textContent = '☁️ Synced';
+    setTimeout(() => indicator.classList.add('hidden'), 1500);
+  } else if (status === 'error') {
+    indicator.textContent = '⚠️ Sync error';
+    indicator.classList.add('error');
+  }
+}
+
+
+/* ============ DATA ============ */
+
+const behaviors = {
+  morning: [
+    { id: 'pills', text: 'Took my pills', value: 0.25, emoji: '💊' },
+    { id: 'teeth_am', text: 'Brushed my teeth', value: 0.10, emoji: '🪥' },
+    { id: 'breakfast', text: 'Ate a healthy breakfast', value: 0.25, emoji: '🥣' }
+  ],
+  afterschool: [
+    { id: 'homework', text: 'Did my homework independently', value: 1.00, emoji: '✏️' }
+  ],
+  evening: [
+    { id: 'hair', text: 'Did my hair', value: 0.25, emoji: '💇‍♀️' },
+    { id: 'teeth_pm', text: 'Brushed my teeth', value: 0.10, emoji: '🪥' },
+    { id: 'shower_bonus', text: 'Extra shower (Mon or Tue)', value: 0.75, emoji: '🚿', bonus: true, days: [1, 2] },
+    { id: 'dinner', text: 'Made it through dinner peacefully', value: 1.00, emoji: '🍽️' }
+  ],
+  shabbat: [
+    { id: 'shabbat_prep', text: 'Helped with Shabbat prep', value: 0.50, emoji: '🕯️' },
+    { id: 'shabbat_daven', text: 'Davened on my own', value: 0.50, emoji: '📖' }
+  ],
+  sunday: [
+    { id: 'sunday_daven', text: 'Davened on my own', value: 0.50, emoji: '📖' },
+    { id: 'sunday_read', text: 'Read a book for fun', value: 0.50, emoji: '📚' }
+  ]
+};
+
+// Day of week: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+// Math = every weekday, Music = Tuesday only
+const HARD_CLASS_DAYS = {
+  1: { hasHardClass: true, label: 'Math' },           // Mon
+  2: { hasHardClass: true, label: 'Math AND Music' }, // Tue (hardest day!)
+  3: { hasHardClass: true, label: 'Math' },           // Wed
+  4: { hasHardClass: true, label: 'Math' },           // Thu
+  5: { hasHardClass: true, label: 'Math' }            // Fri
+};
+
+const badges = [
+  { id: 'first_day', name: 'First Day!', req: 'Complete day 1', emoji: '🌟', threshold: 1 },
+  { id: 'three_days', name: '3 Day Streak', req: '3 days in a row', emoji: '🥉', threshold: 3 },
+  { id: 'week', name: '1 Week Strong', req: '7 day streak', emoji: '🥈', threshold: 7 },
+  { id: 'two_weeks', name: '2 Weeks!', req: '14 day streak', emoji: '🥇', threshold: 14 },
+  { id: 'month', name: 'Monthly Star', req: '30 day streak', emoji: '💎', threshold: 30 },
+  { id: 'legend', name: 'Legendary', req: '60 day streak', emoji: '👑', threshold: 60 }
+];
+
+// Default coping skills - can be customized by user
+const DEFAULT_COPING_SKILLS = [
+  { emoji: '🌬️', text: 'Mindful breathing' },
+  { emoji: '🤗', text: 'Gave myself a hug' },
+  { emoji: '👀', text: 'Noticed things I see' }
+];
+
+// Default rewards - can be edited from Settings
+const DEFAULT_REWARDS = [
+  { id: 'markers', name: 'Fancy Coloring Markers', cost: 25, emoji: '🖍️' },
+  { id: 'stanley', name: 'Stanley Cup', cost: 45, emoji: '🥤' },
+  { id: 'stanley_boot', name: 'Stanley Boot Accessory', cost: 15, emoji: '👢' },
+  { id: 'stanley_charm', name: 'Stanley Charm Set', cost: 12, emoji: '✨' },
+  { id: 'stanley_straw', name: 'Fancy Stanley Straws', cost: 8, emoji: '🥤' },
+  { id: 'mom_date', name: 'Special Date with Mom 💜', cost: 20, emoji: '👩‍👧' }
+];
+
+// Default bonus values - can be edited from Settings
+const DEFAULT_BONUSES = {
+  schoolGreen: 1.00,
+  schoolYellow: 0.50,
+  schoolRed: 0.25,
+  notSentOut: 0.75,
+  mathBonus: 0.50,
+  musicBonus: 0.50,
+  copingValue: 0.50,
+  kindValue: 0.50,
+  bedtimeEarly: 1.50,
+  bedtimeOnTime: 0.75
+};
+
+// These get loaded from saved state if customized
+let copingSkills = [...DEFAULT_COPING_SKILLS];
+let rewards = [...DEFAULT_REWARDS];
+let bonuses = {...DEFAULT_BONUSES};
+
+const COPING_MAX = 3;
+const KIND_MAX = 3;
+
+/* ============ STATE ============ */
+
+const STORAGE_KEY = 'raizel_tracker_v1';
+let state = getInitialState();
+
+function getInitialState() {
+  return {
+    balance: 0,
+    spent: 0,
+    streak: 0,
+    lastCompleteDate: null,
+    earnedBadges: [],
+    kindnessEntries: [],
+    copingEntries: [],
+    days: {},
+    customRewards: null,
+    customBonuses: null,
+    customBehaviorValues: null,
+    parentPIN: null
+  };
+}
+
+function applyLoadedState(loaded) {
+  if (!loaded) return;
+  // Defensive migration - ensure all needed fields exist
+  if (!loaded.kindnessEntries) loaded.kindnessEntries = [];
+  if (!loaded.copingEntries) loaded.copingEntries = [];
+  if (!loaded.earnedBadges) loaded.earnedBadges = [];
+  if (!loaded.days) loaded.days = {};
+  if (loaded.balance === undefined) loaded.balance = 0;
+  if (loaded.streak === undefined) loaded.streak = 0;
+  if (loaded.spent === undefined) loaded.spent = 0;
+  if (loaded.lastCompleteDate === undefined) loaded.lastCompleteDate = null;
+
+  // Load custom rewards if saved
+  if (loaded.customRewards && loaded.customRewards.length > 0) {
+    rewards = loaded.customRewards;
+  }
+  if (loaded.customBonuses) {
+    bonuses = { ...DEFAULT_BONUSES, ...loaded.customBonuses };
+  }
+  if (loaded.customBehaviorValues) {
+    Object.keys(behaviors).forEach(section => {
+      behaviors[section].forEach(b => {
+        if (loaded.customBehaviorValues[b.id] !== undefined) {
+          b.value = loaded.customBehaviorValues[b.id];
+        }
+      });
+    });
+  }
+
+  // Migrate each day's data
+  Object.values(loaded.days).forEach(day => {
+    if (!day.behaviors) day.behaviors = {};
+    if (day.notSentOut === undefined) day.notSentOut = false;
+    if (day.copingCount === undefined) day.copingCount = 0;
+    if (day.kindCount === undefined) day.kindCount = 0;
+    if (day.bedtimeBonus === undefined) day.bedtimeBonus = null;
+    if (day.totalEarned === undefined) day.totalEarned = 0;
+    if (day.mathDone === undefined) day.mathDone = false;
+    if (day.musicDone === undefined) day.musicDone = false;
+    if (day.hardClass !== undefined && day.mathDone === false) {
+      day.mathDone = day.hardClass;
+      delete day.hardClass;
+      delete day.hardClassValue;
+    }
+    if (day.behaviors.kind !== undefined) delete day.behaviors.kind;
+  });
+
+  state = loaded;
+}
+
+async function loadStateFromFirebase() {
+  if (!userDocRef) return;
+  try {
+    showSyncStatus('syncing');
+    const snap = await getDoc(userDocRef);
+    if (snap.exists()) {
+      applyLoadedState(snap.data());
+    } else {
+      // First time: try to migrate from localStorage if there's old data
+      const localData = localStorage.getItem(STORAGE_KEY);
+      if (localData) {
+        try {
+          applyLoadedState(JSON.parse(localData));
+          // Save migrated data to Firebase
+          await saveStateNow();
+        } catch(e) { console.error(e); }
+      } else {
+        state = getInitialState();
+      }
+    }
+    isInitialLoad = false;
+    showSyncStatus('synced');
+    renderAll();
+  } catch (e) {
+    console.error('Failed to load state:', e);
+    showSyncStatus('error');
+  }
+}
+
+function saveState() {
+  // Persist custom config alongside user data
+  state.customRewards = rewards;
+  state.customBonuses = bonuses;
+  const customValues = {};
+  Object.keys(behaviors).forEach(section => {
+    behaviors[section].forEach(b => {
+      customValues[b.id] = b.value;
+    });
+  });
+  state.customBehaviorValues = customValues;
+
+  // Also save locally as a backup/cache
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+
+  // Debounce Firebase writes (don't write more than once per second)
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveStateNow, 800);
+}
+
+async function saveStateNow() {
+  if (!userDocRef) return;
+  try {
+    showSyncStatus('syncing');
+    const dataToSave = { ...state, _lastSavedBy: getDeviceId(), _updatedAt: Date.now() };
+    await setDoc(userDocRef, dataToSave);
+    showSyncStatus('synced');
+  } catch (e) {
+    console.error('Failed to save:', e);
+    showSyncStatus('error');
+  }
+}
+
+// The date currently being viewed/edited (defaults to today)
+let viewingDate = new Date();
+
+function getDateKey(dateObj) {
+  return `${dateObj.getFullYear()}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${String(dateObj.getDate()).padStart(2,'0')}`;
+}
+
+function getTodayKey() {
+  return getDateKey(new Date());
+}
+
+function getViewingKey() {
+  return getDateKey(viewingDate);
+}
+
+function isViewingToday() {
+  return getViewingKey() === getTodayKey();
+}
+
+function isViewingFuture() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const viewing = new Date(viewingDate);
+  viewing.setHours(0,0,0,0);
+  return viewing > today;
+}
+
+function changeDay(delta) {
+  const newDate = new Date(viewingDate);
+  newDate.setDate(newDate.getDate() + delta);
+  // Don't allow going into the future
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  newDate.setHours(0,0,0,0);
+  if (newDate > today) return;
+  viewingDate = newDate;
+  renderAll();
+}
+
+function jumpToToday() {
+  viewingDate = new Date();
+  renderAll();
+}
+
+function getTodayData() {
+  const key = getViewingKey();
+  if (!state.days[key]) {
+    state.days[key] = {
+      behaviors: {},
+      schoolRating: null,
+      hardClass: false,
+      notSentOut: false,
+      copingCount: 0,
+      kindCount: 0,
+      totalEarned: 0
+    };
+  }
+  // Migration for existing data
+  const day = state.days[key];
+  if (day.notSentOut === undefined) day.notSentOut = false;
+  if (day.copingCount === undefined) day.copingCount = 0;
+  if (day.kindCount === undefined) day.kindCount = 0;
+  return day;
+}
+
+/* ============ RENDERING ============ */
+
+function renderDateNav() {
+  const viewing = new Date(viewingDate);
+  viewing.setHours(0,0,0,0);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const dayEl = document.getElementById('date-nav-day');
+  const fullEl = document.getElementById('date-nav-full');
+
+  let dayLabel;
+  if (viewing.getTime() === today.getTime()) {
+    dayLabel = 'Today';
+  } else if (viewing.getTime() === yesterday.getTime()) {
+    dayLabel = 'Yesterday';
+  } else {
+    dayLabel = viewing.toLocaleDateString('en-US', { weekday: 'long' });
+  }
+  dayEl.textContent = dayLabel;
+  fullEl.textContent = viewing.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  // Disable next button when viewing today
+  const nextBtn = document.getElementById('date-nav-next');
+  nextBtn.disabled = isViewingToday();
+
+  // Visual indicator for editing past days
+  document.getElementById('date-nav-container').classList.toggle('editing-past', !isViewingToday());
+}
+
+function renderDayAwareSections() {
+  const dayOfWeek = viewingDate.getDay(); // 0=Sun, 6=Sat
+  const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+  const isSaturday = dayOfWeek === 6;
+  const isSunday = dayOfWeek === 0;
+
+  // School and homework only on weekdays
+  document.getElementById('school-section').style.display = isWeekday ? 'block' : 'none';
+  // Find the after-school section by looking for its icon class
+  const afterSchoolSections = document.querySelectorAll('.section-icon.afterschool');
+  if (afterSchoolSections[0]) {
+    afterSchoolSections[0].closest('.section').style.display = isWeekday ? 'block' : 'none';
+  }
+
+  // Shabbat section only on Saturday
+  document.getElementById('shabbat-section').style.display = isSaturday ? 'block' : 'none';
+
+  // Sunday section only on Sunday
+  document.getElementById('sunday-section').style.display = isSunday ? 'block' : 'none';
+
+  // Update hard-class label and value based on day
+  if (isWeekday) {
+    // Show music toggle only on Tuesday (dayOfWeek === 2)
+    document.getElementById('music-toggle').style.display = dayOfWeek === 2 ? 'flex' : 'none';
+  }
+}
+
+function renderBehaviors(sectionKey, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const today = getTodayData();
+  const dayOfWeek = viewingDate.getDay();
+
+  // Filter behaviors by day-of-week if specified
+  const visibleBehaviors = behaviors[sectionKey].filter(b => {
+    if (!b.days) return true; // No day restriction = show every day
+    return b.days.includes(dayOfWeek);
+  });
+
+  if (visibleBehaviors.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = visibleBehaviors.map(b => {
+    const done = today.behaviors[b.id];
+    const bonusClass = b.bonus ? ' bonus' : '';
+    const bonusTag = b.bonus ? '<span class="behavior-bonus-tag">Bonus</span>' : '';
+    return `
+      <div class="behavior${bonusClass}${done ? ' done' : ''}" onclick="toggleBehavior('${sectionKey}', '${b.id}')">
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="behavior-text">${b.emoji} ${b.text}${bonusTag}</div>
+        <div class="behavior-value">$${b.value.toFixed(2)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderSchool() {
+  const today = getTodayData();
+  document.querySelectorAll('.rating-btn').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.rating === today.schoolRating);
+  });
+  document.getElementById('math-toggle').classList.toggle('active', !!today.mathDone);
+  document.getElementById('music-toggle').classList.toggle('active', !!today.musicDone);
+  document.getElementById('not-sent-out-toggle').classList.toggle('active', today.notSentOut);
+  // Update dynamic price labels
+  const mathSub = document.getElementById('math-sub');
+  if (mathSub) mathSub.textContent = `Got through math today! +$${bonuses.mathBonus.toFixed(2)}`;
+  const musicSub = document.getElementById('music-sub');
+  if (musicSub) musicSub.textContent = `Got through music today! +$${bonuses.musicBonus.toFixed(2)}`;
+  // Update rating displays
+  const rg = document.getElementById('rating-value-green');
+  const ry = document.getElementById('rating-value-yellow');
+  const rr = document.getElementById('rating-value-red');
+  if (rg) rg.textContent = `$${bonuses.schoolGreen.toFixed(2)}`;
+  if (ry) ry.textContent = `$${bonuses.schoolYellow.toFixed(2)}`;
+  if (rr) rr.textContent = `$${bonuses.schoolRed.toFixed(2)}`;
+}
+
+function renderSettings() {
+  // Behavior prices
+  const behaviorList = document.getElementById('settings-behaviors-list');
+  if (behaviorList) {
+    let html = '';
+    const sectionLabels = {
+      morning: '🌅 Morning',
+      afterschool: '📚 After School',
+      evening: '🌙 Evening',
+      shabbat: '🕯️ Shabbat',
+      sunday: '☀️ Sunday'
+    };
+    Object.keys(behaviors).forEach(section => {
+      html += `<div style="font-size:0.75rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.05em;margin:10px 4px 6px;">${sectionLabels[section]}</div>`;
+      behaviors[section].forEach(b => {
+        html += `
+          <div class="settings-row">
+            <span class="settings-row-emoji">${b.emoji}</span>
+            <div class="settings-row-text">${b.text}</div>
+            <span style="color:var(--text-soft);font-weight:700;">$</span>
+            <input type="number" class="settings-price-input" value="${b.value.toFixed(2)}" 
+              step="0.05" min="0" data-section="${section}" data-id="${b.id}"
+              onchange="updateBehaviorPrice(this)">
+          </div>
+        `;
+      });
+    });
+    behaviorList.innerHTML = html;
+  }
+
+  // Bonus prices
+  const bonusList = document.getElementById('settings-bonuses-list');
+  if (bonusList) {
+    const bonusItems = [
+      { key: 'schoolGreen', label: '🌟 School: Great Day', emoji: '' },
+      { key: 'schoolYellow', label: '😊 School: Okay Day', emoji: '' },
+      { key: 'schoolRed', label: '🫂 School: Hard Day', emoji: '' },
+      { key: 'notSentOut', label: '🏆 Not Sent Out All Day', emoji: '' },
+      { key: 'mathBonus', label: '🔢 Math Win', emoji: '' },
+      { key: 'musicBonus', label: '🎵 Music Win', emoji: '' },
+      { key: 'kindValue', label: '💛 Each Kind Act', emoji: '' },
+      { key: 'copingValue', label: '🧘‍♀️ Each Coping Skill', emoji: '' },
+      { key: 'bedtimeEarly', label: '🌜 Bedtime: 8:30 PM', emoji: '' },
+      { key: 'bedtimeOnTime', label: '🌜 Bedtime: 9:00 PM', emoji: '' }
+    ];
+    bonusList.innerHTML = bonusItems.map(item => `
+      <div class="settings-row">
+        <div class="settings-row-text">${item.label}</div>
+        <span style="color:var(--text-soft);font-weight:700;">$</span>
+        <input type="number" class="settings-price-input" value="${bonuses[item.key].toFixed(2)}" 
+          step="0.05" min="0" data-bonus="${item.key}"
+          onchange="updateBonusPrice(this)">
+      </div>
+    `).join('');
+  }
+
+  // Rewards
+  const rewardsList = document.getElementById('settings-rewards-list');
+  if (rewardsList) {
+    rewardsList.innerHTML = rewards.map((r, i) => `
+      <div class="settings-row">
+        <span class="settings-row-emoji">${r.emoji}</span>
+        <input type="text" class="settings-name-input" value="${escapeHtml(r.name)}" 
+          data-reward-index="${i}" data-field="name" onchange="updateRewardField(this)">
+        <span style="color:var(--text-soft);font-weight:700;">$</span>
+        <input type="number" class="settings-price-input" value="${r.cost.toFixed(2)}" 
+          step="1" min="0" data-reward-index="${i}" data-field="cost" onchange="updateRewardField(this)">
+        <button class="settings-row-delete" onclick="deleteReward(${i})" title="Delete">✕</button>
+      </div>
+    `).join('');
+  }
+
+  // Stats
+  const statsEl = document.getElementById('settings-stats');
+  if (statsEl) {
+    const totalDays = Object.keys(state.days).length;
+    const totalKindness = (state.kindnessEntries || []).length;
+    const totalCoping = (state.copingEntries || []).length;
+    statsEl.innerHTML = `
+      <div class="settings-stat-row"><span>Current Balance</span><span class="settings-stat-value">$${state.balance.toFixed(2)}</span></div>
+      <div class="settings-stat-row"><span>Current Streak</span><span class="settings-stat-value">${state.streak} days</span></div>
+      <div class="settings-stat-row"><span>Days Tracked</span><span class="settings-stat-value">${totalDays}</span></div>
+      <div class="settings-stat-row"><span>Badges Earned</span><span class="settings-stat-value">${state.earnedBadges.length}</span></div>
+      <div class="settings-stat-row"><span>Kindness Entries</span><span class="settings-stat-value">${totalKindness}</span></div>
+      <div class="settings-stat-row"><span>Coping Entries</span><span class="settings-stat-value">${totalCoping}</span></div>
+    `;
+  }
+}
+
+function updateBehaviorPrice(input) {
+  const section = input.dataset.section;
+  const id = input.dataset.id;
+  const newVal = parseFloat(input.value) || 0;
+  const b = behaviors[section].find(x => x.id === id);
+  if (b) {
+    b.value = newVal;
+    saveState();
+    renderAll();
+  }
+}
+
+function updateBonusPrice(input) {
+  const key = input.dataset.bonus;
+  const newVal = parseFloat(input.value) || 0;
+  bonuses[key] = newVal;
+  saveState();
+  renderAll();
+}
+
+function updateRewardField(input) {
+  const idx = parseInt(input.dataset.rewardIndex);
+  const field = input.dataset.field;
+  if (field === 'cost') {
+    rewards[idx][field] = parseFloat(input.value) || 0;
+  } else {
+    rewards[idx][field] = input.value;
+  }
+  saveState();
+  renderRewards();
+}
+
+function deleteReward(idx) {
+  if (!confirm(`Delete "${rewards[idx].name}" from the rewards list?`)) return;
+  rewards.splice(idx, 1);
+  saveState();
+  renderSettings();
+  renderRewards();
+}
+
+function addNewReward() {
+  const name = prompt('Reward name?');
+  if (!name) return;
+  const cost = parseFloat(prompt('Cost in dollars?'));
+  if (isNaN(cost) || cost < 0) return;
+  const emoji = prompt('Emoji? (e.g. 🎁)') || '🎁';
+  rewards.push({
+    id: 'reward_' + Date.now(),
+    name: name,
+    cost: cost,
+    emoji: emoji
+  });
+  saveState();
+  renderSettings();
+  renderRewards();
+}
+
+function resetAllData() {
+  if (!confirm('⚠️ This will WIPE ALL DATA — every entry, balance, streak, and badge. Are you absolutely sure?')) return;
+  if (!confirm('Last chance! Really reset everything?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+/* ============ PARENT PIN ============ */
+
+const DEFAULT_PIN = '1234';
+let pinInput = '';
+let parentMode = false;
+
+function getPIN() {
+  return state.parentPIN || DEFAULT_PIN;
+}
+
+function openParentPIN() {
+  pinInput = '';
+  updatePINDisplay();
+  document.getElementById('pin-error').textContent = '';
+  document.getElementById('pin-modal').classList.add('show');
+  document.getElementById('pin-overlay').classList.add('show');
+}
+
+function closeParentPIN() {
+  document.getElementById('pin-modal').classList.remove('show');
+  document.getElementById('pin-overlay').classList.remove('show');
+}
+
+function enterPIN(digit) {
+  if (pinInput.length >= 4) return;
+  pinInput += digit;
+  updatePINDisplay();
+  if (pinInput.length === 4) {
+    setTimeout(checkPIN, 200);
+  }
+}
+
+function clearPIN() {
+  pinInput = pinInput.slice(0, -1);
+  updatePINDisplay();
+  document.getElementById('pin-error').textContent = '';
+}
+
+function updatePINDisplay() {
+  const dots = document.querySelectorAll('.pin-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('filled', i < pinInput.length);
+  });
+}
+
+function checkPIN() {
+  if (pinInput === getPIN()) {
+    enterParentMode();
+    closeParentPIN();
+  } else {
+    document.getElementById('pin-error').textContent = 'Wrong PIN — try again';
+    pinInput = '';
+    setTimeout(updatePINDisplay, 300);
+  }
+}
+
+function enterParentMode() {
+  parentMode = true;
+  document.getElementById('parent-banner').classList.add('show');
+  document.getElementById('tab-settings').classList.add('parent-unlocked');
+  // Switch to settings tab
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-settings').classList.add('active');
+  renderSettings();
+}
+
+function lockParentMode() {
+  parentMode = false;
+  document.getElementById('parent-banner').classList.remove('show');
+  document.getElementById('tab-settings').classList.remove('parent-unlocked');
+  // Go back to today
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab[data-tab="today"]').classList.add('active');
+  document.getElementById('tab-today').classList.add('active');
+}
+
+function changePIN() {
+  const input = document.getElementById('new-pin');
+  const newPin = input.value;
+  if (!/^\d{4}$/.test(newPin)) {
+    alert('PIN must be exactly 4 digits');
+    return;
+  }
+  state.parentPIN = newPin;
+  saveState();
+  input.value = '';
+  alert('✅ PIN updated!');
+}
+
+function renderCoping() {
+  const today = getTodayData();
+  const count = today.copingCount || 0;
+  const earned = count * bonuses.copingValue;
+  const maxEarn = COPING_MAX * bonuses.copingValue;
+
+  document.getElementById('coping-count').textContent = count;
+  document.getElementById('coping-earned').textContent = `$${earned.toFixed(2)}`;
+
+  // Show/hide form vs max message
+  const form = document.getElementById('coping-form');
+  const maxMsg = document.getElementById('coping-max-msg');
+  if (count >= COPING_MAX) {
+    form.style.display = 'none';
+    maxMsg.style.display = 'block';
+  } else {
+    form.style.display = 'block';
+    maxMsg.style.display = 'none';
+  }
+
+  // Render skill chips
+  const chipsContainer = document.getElementById('coping-skill-chips');
+  chipsContainer.innerHTML = copingSkills.map((s, i) => `
+    <div class="coping-chip" data-skill="${escapeHtml(s.text)}" data-emoji="${s.emoji}" onclick="selectCopingChip(this)">
+      ${s.emoji} ${s.text}
+    </div>
+  `).join('');
+
+  // Render entries for the viewing date
+  const entriesContainer = document.getElementById('coping-today-entries');
+  if (!state.copingEntries) state.copingEntries = [];
+  const viewKey = getViewingKey();
+  const viewEntries = state.copingEntries
+    .map((e, idx) => ({ ...e, _index: idx }))
+    .filter(e => e.date === viewKey)
+    .reverse();
+
+  if (viewEntries.length === 0) {
+    entriesContainer.innerHTML = '';
+  } else {
+    const label = isViewingToday() ? "Today's entries" : "Entries for this day";
+    entriesContainer.innerHTML = `
+      <div style="font-size:0.75rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; margin-top:14px; margin-bottom:6px; padding-left:4px;">
+        ${label}
+      </div>
+      ${viewEntries.map(e => `
+        <div class="coping-entry" id="coping-entry-${e._index}">
+          <div class="coping-entry-actions">
+            <button class="coping-entry-edit" onclick="editCopingEntry(${e._index})" title="Edit">✎</button>
+            <button class="coping-entry-delete" onclick="deleteCopingEntry(${e._index})" title="Delete">✕</button>
+          </div>
+          <div class="coping-entry-label">😤 Frustration</div>
+          <div class="coping-entry-text">${escapeHtml(e.frustration)}</div>
+          <div class="coping-entry-label">🧘‍♀️ Skill used</div>
+          <div class="coping-entry-text">${escapeHtml(e.skill)}</div>
+        </div>
+      `).join('')}
+    `;
+  }
+}
+
+function editCopingEntry(index) {
+  if (!state.copingEntries[index]) return;
+  const entry = state.copingEntries[index];
+  const entryEl = document.getElementById(`coping-entry-${index}`);
+  if (!entryEl) return;
+
+  entryEl.innerHTML = `
+    <div class="coping-entry-label">😤 Frustration</div>
+    <textarea class="coping-input" id="edit-frustration-${index}" rows="2">${escapeHtml(entry.frustration)}</textarea>
+    <div class="coping-entry-label" style="margin-top:8px;">🧘‍♀️ Skill used</div>
+    <textarea class="coping-input" id="edit-skill-${index}" rows="2">${escapeHtml(entry.skill)}</textarea>
+    <div style="display:flex; gap:8px; margin-top:10px;">
+      <button class="coping-save-btn" style="flex:1; padding:10px;" onclick="saveCopingEdit(${index})">💾 Save</button>
+      <button class="coping-save-btn" style="flex:1; padding:10px; background:#94a3b8;" onclick="renderCoping()">Cancel</button>
+    </div>
+  `;
+}
+
+function saveCopingEdit(index) {
+  const frustration = document.getElementById(`edit-frustration-${index}`).value.trim();
+  const skill = document.getElementById(`edit-skill-${index}`).value.trim();
+
+  if (!frustration || !skill) {
+    alert('Both fields are needed! ✨');
+    return;
+  }
+
+  state.copingEntries[index].frustration = frustration;
+  state.copingEntries[index].skill = skill;
+  saveState();
+  renderCoping();
+}
+
+function selectCopingChip(el) {
+  // Toggle selected class on chip and fill the skill textarea
+  const allChips = document.querySelectorAll('.coping-chip');
+  allChips.forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const skillText = el.dataset.skill;
+  const emoji = el.dataset.emoji;
+  document.getElementById('coping-skill-text').value = `${emoji} ${skillText}`;
+}
+
+function saveCopingEntry() {
+  const frustration = document.getElementById('frustration-text').value.trim();
+  const skill = document.getElementById('coping-skill-text').value.trim();
+
+  if (!frustration) {
+    alert('Please write what the frustration was ✨');
+    return;
+  }
+  if (!skill) {
+    alert('Please write which coping skill you used 💙');
+    return;
+  }
+
+  const today = getTodayData();
+  if (today.copingCount >= COPING_MAX) return;
+
+  // Save the entry
+  if (!state.copingEntries) state.copingEntries = [];
+  state.copingEntries.push({
+    date: getViewingKey(),
+    frustration: frustration,
+    skill: skill,
+    timestamp: Date.now()
+  });
+
+  // Increment count and add money
+  today.copingCount += 1;
+  state.balance += bonuses.copingValue;
+  today.totalEarned += bonuses.copingValue;
+
+  // Clear form
+  document.getElementById('frustration-text').value = '';
+  document.getElementById('coping-skill-text').value = '';
+  document.querySelectorAll('.coping-chip').forEach(c => c.classList.remove('selected'));
+
+  // Show saved message
+  const msg = document.getElementById('coping-saved-msg');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 2000);
+
+  celebrate('🧘‍♀️ Great Coping!', `You used a skill! +$${bonuses.copingValue.toFixed(2)}`);
+
+  checkStreakAndBadges();
+  saveState();
+  renderAll();
+}
+
+function deleteCopingEntry(index) {
+  if (!confirm('Delete this coping entry? You will lose $0.50.')) return;
+  if (!state.copingEntries || !state.copingEntries[index]) return;
+
+  const entry = state.copingEntries[index];
+  const entryDate = entry.date;
+  state.copingEntries.splice(index, 1);
+
+  // Decrement count for that day and subtract money
+  if (state.days[entryDate]) {
+    state.days[entryDate].copingCount = Math.max(0, (state.days[entryDate].copingCount || 0) - 1);
+    state.days[entryDate].totalEarned -= bonuses.copingValue;
+  }
+  state.balance -= bonuses.copingValue;
+
+  saveState();
+  renderAll();
+}
+
+function resetCopingForDay() {
+  const viewKey = getViewingKey();
+  const dayLabel = isViewingToday() ? "today" : "this day";
+  if (!confirm(`Reset all coping entries for ${dayLabel}? You will lose any money earned from those entries.`)) return;
+
+  // Remove all coping entries for this day
+  if (!state.copingEntries) state.copingEntries = [];
+  const entriesToRemove = state.copingEntries.filter(e => e.date === viewKey);
+  const refund = entriesToRemove.length * bonuses.copingValue;
+  state.copingEntries = state.copingEntries.filter(e => e.date !== viewKey);
+
+  // Reset day count
+  if (state.days[viewKey]) {
+    state.days[viewKey].copingCount = 0;
+    state.days[viewKey].totalEarned -= refund;
+  }
+  state.balance -= refund;
+
+  saveState();
+  renderAll();
+}
+
+function toggleNotSentOut() {
+  const today = getTodayData();
+  if (today.notSentOut) {
+    today.notSentOut = false;
+    state.balance -= bonuses.notSentOut;
+    today.totalEarned -= bonuses.notSentOut;
+  } else {
+    today.notSentOut = true;
+    state.balance += bonuses.notSentOut;
+    today.totalEarned += bonuses.notSentOut;
+    celebrate('🏆 Amazing!', `Stayed in class all day! +$${bonuses.notSentOut.toFixed(2)}`);
+  }
+  checkStreakAndBadges();
+  saveState();
+  renderAll();
+}
+
+function renderBedtime() {
+  const today = getTodayData();
+  document.querySelectorAll('.bedtime-btn').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.time === today.bedtimeBonus);
+  });
+}
+
+function setBedtimeBonus(timeKey) {
+  const today = getTodayData();
+
+  // Subtract previous bonus if there was one
+  if (today.bedtimeBonus) {
+    const prev = bonuses["bedtime" + (today.bedtimeBonus === "early" ? "Early" : "OnTime")];
+    state.balance -= prev;
+    today.totalEarned -= prev;
+  }
+
+  if (today.bedtimeBonus === timeKey) {
+    // Tapping the same one deselects it
+    today.bedtimeBonus = null;
+  } else {
+    today.bedtimeBonus = timeKey;
+    const newValue = bonuses["bedtime" + (timeKey === "early" ? "Early" : "OnTime")];
+    state.balance += newValue;
+    today.totalEarned += newValue;
+    const msg = timeKey === 'early' 
+      ? '🌟 In bed early!' 
+      : '🌜 Right on time!';
+    celebrate(msg, `Bedtime bonus +$${newValue.toFixed(2)}!`);
+  }
+
+  checkStreakAndBadges();
+  saveState();
+  renderAll();
+}
+
+function renderStats() {
+  document.getElementById('stat-money').textContent = `$${state.balance.toFixed(2)}`;
+  document.getElementById('stat-streak').textContent = state.streak;
+  document.getElementById('stat-badges').textContent = state.earnedBadges.length;
+  document.getElementById('balance-amount').textContent = `$${state.balance.toFixed(2)}`;
+}
+
+function renderRewards() {
+  const container = document.getElementById('rewards-list');
+  container.innerHTML = rewards.map(r => {
+    const pct = Math.min(100, (state.balance / r.cost) * 100);
+    const canAfford = state.balance >= r.cost;
+    return `
+      <div class="reward-card">
+        <div class="reward-emoji">${r.emoji}</div>
+        <div class="reward-info">
+          <div class="reward-name">${r.name}</div>
+          <div class="reward-progress-bar">
+            <div class="reward-progress-fill" style="width: ${pct}%"></div>
+          </div>
+          <div class="reward-cost">${canAfford ? '✨ Ready to redeem!' : `$${state.balance.toFixed(2)} of $${r.cost.toFixed(2)}`}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderBadges() {
+  const container = document.getElementById('badges-grid');
+  container.innerHTML = badges.map(b => {
+    const earned = state.earnedBadges.includes(b.id);
+    return `
+      <div class="badge${earned ? ' earned' : ''}">
+        <span class="badge-icon">${b.emoji}</span>
+        <div class="badge-name">${b.name}</div>
+        <div class="badge-req">${b.req}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderJournal() {
+  const container = document.getElementById('journal-list');
+  if (!state.kindnessEntries || state.kindnessEntries.length === 0) {
+    container.innerHTML = `
+      <div class="journal-empty">
+        <span class="journal-empty-icon">💝</span>
+        <div class="journal-empty-text">No kindness entries yet!<br>Write your first one today ✨</div>
+      </div>
+    `;
+    return;
+  }
+
+  // Sort newest first
+  const sorted = [...state.kindnessEntries].sort((a, b) => b.timestamp - a.timestamp);
+  container.innerHTML = sorted.map((entry, i) => {
+    const d = new Date(entry.timestamp);
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    const realIndex = state.kindnessEntries.indexOf(entry);
+    return `
+      <div class="journal-entry">
+        <button class="journal-delete" onclick="deleteKindness(${realIndex})" title="Delete">✕</button>
+        <div class="journal-date">${dateStr}</div>
+        <div class="journal-text">"${escapeHtml(entry.text)}"</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderKind() {
+  const today = getTodayData();
+  const count = today.kindCount || 0;
+  const earned = count * bonuses.kindValue;
+
+  document.getElementById('kind-count').textContent = count;
+  document.getElementById('kind-earned').textContent = `$${earned.toFixed(2)}`;
+
+  // Show/hide form vs max message
+  const form = document.getElementById('kindness-journal-entry');
+  const maxMsg = document.getElementById('kind-max-msg');
+  if (count >= KIND_MAX) {
+    form.style.display = 'none';
+    maxMsg.style.display = 'block';
+  } else {
+    form.style.display = 'block';
+    maxMsg.style.display = 'none';
+  }
+
+  // Render entries for the viewing date
+  const entriesContainer = document.getElementById('kind-today-entries');
+  if (!state.kindnessEntries) state.kindnessEntries = [];
+  const viewKey = getViewingKey();
+  const viewEntries = state.kindnessEntries
+    .map((e, idx) => ({ ...e, _index: idx }))
+    .filter(e => e.date === viewKey)
+    .reverse();
+
+  if (viewEntries.length === 0) {
+    entriesContainer.innerHTML = '';
+  } else {
+    const label = isViewingToday() ? "Today's kind moments" : "Kind moments this day";
+    entriesContainer.innerHTML = `
+      <div style="font-size:0.75rem; font-weight:700; color:var(--text-soft); text-transform:uppercase; letter-spacing:0.08em; margin-top:14px; margin-bottom:6px; padding-left:4px;">
+        ${label}
+      </div>
+      ${viewEntries.map(e => `
+        <div class="kind-entry" id="kind-entry-${e._index}">
+          <div class="kind-entry-actions">
+            <button class="kind-entry-edit" onclick="editKindEntry(${e._index})" title="Edit">✎</button>
+            <button class="kind-entry-delete" onclick="deleteKindness(${e._index})" title="Delete">✕</button>
+          </div>
+          <div class="kind-entry-text">"${escapeHtml(e.text)}"</div>
+        </div>
+      `).join('')}
+    `;
+  }
+}
+
+function saveKindness() {
+  const textarea = document.getElementById('kindness-text');
+  const text = textarea.value.trim();
+  if (!text) {
+    alert('Write what kind thing you did first ✨');
+    return;
+  }
+
+  const today = getTodayData();
+  if ((today.kindCount || 0) >= KIND_MAX) return;
+
+  if (!state.kindnessEntries) state.kindnessEntries = [];
+  state.kindnessEntries.push({
+    text: text,
+    date: getViewingKey(),
+    timestamp: Date.now()
+  });
+
+  // Increment count and add money
+  today.kindCount = (today.kindCount || 0) + 1;
+  state.balance += bonuses.kindValue;
+  today.totalEarned += bonuses.kindValue;
+
+  textarea.value = '';
+  const msg = document.getElementById('kindness-saved-msg');
+  msg.classList.add('show');
+  setTimeout(() => msg.classList.remove('show'), 2000);
+
+  celebrate('💜 Kindness Saved!', `+$${bonuses.kindValue.toFixed(2)} • Added to your journal`);
+
+  checkStreakAndBadges();
+  saveState();
+  renderAll();
+}
+
+function editKindEntry(index) {
+  if (!state.kindnessEntries[index]) return;
+  const entry = state.kindnessEntries[index];
+  const entryEl = document.getElementById(`kind-entry-${index}`);
+  if (!entryEl) return;
+
+  entryEl.innerHTML = `
+    <textarea class="kindness-input" id="edit-kind-${index}" rows="3">${escapeHtml(entry.text)}</textarea>
+    <div style="display:flex; gap:8px; margin-top:10px;">
+      <button class="kindness-save-btn" style="flex:1; padding:10px;" onclick="saveKindEdit(${index})">💾 Save</button>
+      <button class="kindness-save-btn" style="flex:1; padding:10px; background:#94a3b8;" onclick="renderKind()">Cancel</button>
+    </div>
+  `;
+}
+
+function saveKindEdit(index) {
+  const newText = document.getElementById(`edit-kind-${index}`).value.trim();
+  if (!newText) {
+    alert('Kindness entry cannot be empty 💜');
+    return;
+  }
+  state.kindnessEntries[index].text = newText;
+  saveState();
+  renderKind();
+  renderJournal();
+}
+
+function deleteKindness(index) {
+  if (!confirm('Delete this kindness entry? You will lose $0.50.')) return;
+  if (!state.kindnessEntries || !state.kindnessEntries[index]) return;
+
+  const entry = state.kindnessEntries[index];
+  const entryDate = entry.date;
+  state.kindnessEntries.splice(index, 1);
+
+  // Decrement count for that day and subtract money
+  if (state.days[entryDate]) {
+    state.days[entryDate].kindCount = Math.max(0, (state.days[entryDate].kindCount || 0) - 1);
+    state.days[entryDate].totalEarned -= bonuses.kindValue;
+  }
+  state.balance -= bonuses.kindValue;
+
+  saveState();
+  renderAll();
+}
+
+function resetKindForDay() {
+  const viewKey = getViewingKey();
+  const dayLabel = isViewingToday() ? "today" : "this day";
+  if (!confirm(`Reset all kindness entries for ${dayLabel}? You will lose any money earned from those entries.`)) return;
+
+  if (!state.kindnessEntries) state.kindnessEntries = [];
+  const entriesToRemove = state.kindnessEntries.filter(e => e.date === viewKey);
+  const refund = entriesToRemove.length * bonuses.kindValue;
+  state.kindnessEntries = state.kindnessEntries.filter(e => e.date !== viewKey);
+
+  if (state.days[viewKey]) {
+    state.days[viewKey].kindCount = 0;
+    state.days[viewKey].totalEarned -= refund;
+  }
+  state.balance -= refund;
+
+  saveState();
+  renderAll();
+}
+
+/* ============ INTERACTIONS ============ */
+
+function toggleBehavior(sectionKey, behaviorId) {
+  const today = getTodayData();
+  const behavior = behaviors[sectionKey].find(b => b.id === behaviorId);
+  const wasDone = today.behaviors[behaviorId];
+
+  if (wasDone) {
+    today.behaviors[behaviorId] = false;
+    state.balance -= behavior.value;
+    today.totalEarned -= behavior.value;
+  } else {
+    today.behaviors[behaviorId] = true;
+    state.balance += behavior.value;
+    today.totalEarned += behavior.value;
+    celebrate(`+$${behavior.value.toFixed(2)}`, `${behavior.emoji} ${behavior.text}`);
+  }
+
+  checkStreakAndBadges();
+  saveState();
+  renderAll();
+}
+
+function setSchoolRating(rating) {
+  const today = getTodayData();
+  const values = { 
+    green: bonuses.schoolGreen, 
+    yellow: bonuses.schoolYellow, 
+    red: bonuses.schoolRed 
+  };
+
+  // Subtract previous rating value
+  if (today.schoolRating) {
+    const prevValue = values[today.schoolRating];
+    state.balance -= prevValue;
+    today.totalEarned -= prevValue;
+  }
+
+  if (today.schoolRating === rating) {
+    today.schoolRating = null;
+  } else {
+    today.schoolRating = rating;
+    const newValue = values[rating];
+    state.balance += newValue;
+    today.totalEarned += newValue;
+    const msgs = {
+      green: ['🌟 Amazing day!', `You earned $${newValue.toFixed(2)}!`],
+      yellow: ['😊 Good job!', `You earned $${newValue.toFixed(2)}!`],
+      red: ['🫂 Tomorrow is new', `You still earned $${newValue.toFixed(2)} for trying`]
+    };
+    celebrate(msgs[rating][0], msgs[rating][1]);
+  }
+
+  checkStreakAndBadges();
+  saveState();
+  renderAll();
+}
+
+function toggleMath() {
+  const today = getTodayData();
+  const bonus = bonuses.mathBonus;
+  if (today.mathDone) {
+    today.mathDone = false;
+    state.balance -= bonus;
+    today.totalEarned -= bonus;
+  } else {
+    today.mathDone = true;
+    state.balance += bonus;
+    today.totalEarned += bonus;
+    celebrate('🔢 Math Win!', `Got through math! +$${bonus.toFixed(2)}`);
+  }
+  saveState();
+  renderAll();
+}
+
+function toggleMusic() {
+  const today = getTodayData();
+  const bonus = bonuses.musicBonus;
+  if (today.musicDone) {
+    today.musicDone = false;
+    state.balance -= bonus;
+    today.totalEarned -= bonus;
+  } else {
+    today.musicDone = true;
+    state.balance += bonus;
+    today.totalEarned += bonus;
+    celebrate('🎵 Music Win!', `Got through music! +$${bonus.toFixed(2)}`);
+  }
+  saveState();
+  renderAll();
+}
+
+function checkStreakAndBadges() {
+  // Only update streak based on actual today, not when viewing past days
+  if (!isViewingToday()) return;
+
+  const today = getTodayData();
+  // Consider a day "complete enough" if they earned at least $1.50 today (flexible for hard days)
+  const dayComplete = today.totalEarned >= 1.50;
+  const todayKey = getTodayKey();
+
+  if (dayComplete && state.lastCompleteDate !== todayKey) {
+    // Check if yesterday was also complete
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+
+    if (state.lastCompleteDate === yKey) {
+      state.streak += 1;
+    } else {
+      state.streak = 1;
+    }
+    state.lastCompleteDate = todayKey;
+
+    // Check for new badges
+    badges.forEach(b => {
+      if (state.streak >= b.threshold && !state.earnedBadges.includes(b.id)) {
+        state.earnedBadges.push(b.id);
+        setTimeout(() => celebrate(`🏆 New Badge!`, `${b.emoji} ${b.name}`), 800);
+      }
+    });
+  } else if (!dayComplete && state.lastCompleteDate === todayKey) {
+    // Undoing today's completion
+    state.streak = Math.max(0, state.streak - 1);
+    state.lastCompleteDate = null;
+  }
+}
+
+function celebrate(title, text) {
+  document.getElementById('celebration-title').textContent = title;
+  document.getElementById('celebration-text').textContent = text;
+  document.getElementById('celebration').classList.add('show');
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closeCelebration() {
+  document.getElementById('celebration').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+/* ============ TAB SWITCHING ============ */
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+    renderAll();
+  });
+});
+
+document.querySelectorAll('.rating-btn').forEach(btn => {
+  btn.addEventListener('click', () => setSchoolRating(btn.dataset.rating));
+});
+
+document.getElementById('math-toggle').addEventListener('click', toggleMath);
+document.getElementById('music-toggle').addEventListener('click', toggleMusic);
+document.getElementById('not-sent-out-toggle').addEventListener('click', toggleNotSentOut);
+document.querySelectorAll('.bedtime-btn').forEach(btn => {
+  btn.addEventListener('click', () => setBedtimeBonus(btn.dataset.time));
+});
+document.getElementById('overlay').addEventListener('click', closeCelebration);
+document.getElementById('pin-overlay').addEventListener('click', closeParentPIN);
+
+/* ============ RENDER ALL ============ */
+
+function renderAll() {
+  renderDateNav();
+  renderDayAwareSections();
+  renderBehaviors('morning', 'morning-items');
+  renderBehaviors('afterschool', 'afterschool-items');
+  renderBehaviors('evening', 'evening-items');
+  renderBehaviors('shabbat', 'shabbat-items');
+  renderBehaviors('sunday', 'sunday-items');
+  renderBedtime();
+  renderKind();
+  renderSchool();
+  renderCoping();
+  renderStats();
+  renderRewards();
+  renderBadges();
+  renderJournal();
+  renderSettings();
+}
+
+// Expose functions called from inline HTML onclick handlers to window
+// (Required because we're now in a module which has its own scope)
+window.toggleBehavior = toggleBehavior;
+window.setSchoolRating = setSchoolRating;
+window.toggleNotSentOut = toggleNotSentOut;
+window.toggleMath = toggleMath;
+window.toggleMusic = toggleMusic;
+window.toggleHardClass = toggleMath; // legacy alias
+window.setBedtimeBonus = setBedtimeBonus;
+window.changeDay = changeDay;
+window.jumpToToday = jumpToToday;
+window.saveCopingEntry = saveCopingEntry;
+window.editCopingEntry = editCopingEntry;
+window.saveCopingEdit = saveCopingEdit;
+window.deleteCopingEntry = deleteCopingEntry;
+window.resetCopingForDay = resetCopingForDay;
+window.selectCopingChip = selectCopingChip;
+window.saveKindness = saveKindness;
+window.editKindEntry = editKindEntry;
+window.saveKindEdit = saveKindEdit;
+window.deleteKindness = deleteKindness;
+window.resetKindForDay = resetKindForDay;
+window.closeCelebration = closeCelebration;
+window.openParentPIN = openParentPIN;
+window.closeParentPIN = closeParentPIN;
+window.enterPIN = enterPIN;
+window.clearPIN = clearPIN;
+window.lockParentMode = lockParentMode;
+window.changePIN = changePIN;
+window.updateBehaviorPrice = updateBehaviorPrice;
+window.updateBonusPrice = updateBonusPrice;
+window.updateRewardField = updateRewardField;
+window.deleteReward = deleteReward;
+window.addNewReward = addNewReward;
+window.resetAllData = resetAllData;
+// Note: signOutUser is already on window from above
+
+// Initial render happens after Firebase auth + load completes
+// (see onAuthStateChanged at top of script)
+</script>
+</body>
+</html>

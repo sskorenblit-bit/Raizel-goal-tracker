@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In • Raizel's Goals</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ec4899;
+    --pink-soft: #fbcfe8;
+    --pink-bg: #fdf2f8;
+    --purple: #a855f7;
+    --purple-soft: #e9d5ff;
+    --lavender: #f3e8ff;
+    --text: #4a1d5f;
+    --text-soft: #9333ea;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(160deg, #fdf2f8 0%, #fce7f3 40%, #f3e8ff 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--text);
+  }
+  .login-card {
+    background: white;
+    border-radius: 28px;
+    padding: 36px 28px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.15);
+    border: 1.5px solid var(--purple-soft);
+    text-align: center;
+  }
+  .login-emoji {
+    font-size: 3rem;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .form-group {
+    margin-bottom: 14px;
+    text-align: left;
+  }
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid var(--purple-soft);
+    background: var(--pink-bg);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus {
+    border-color: var(--pink);
+    background: white;
+  }
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.15s;
+    box-shadow: 0 6px 16px rgba(236, 72, 153, 0.25);
+  }
+  .login-btn:hover { transform: translateY(-2px); }
+  .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .error {
+    color: #dc2626;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 12px;
+    min-height: 20px;
+  }
+  .loading {
+    color: var(--text-soft);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-emoji">💫</div>
+    <h1>Raizel's Goals</h1>
+    <div class="subtitle">Sign in to continue</div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="login-btn" id="login-btn">Sign In ✨</button>
+      <div class="error" id="error"></div>
+      <div class="loading" id="loading" style="display:none;">Signing you in...</div>
+    </form>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  </script>
+
+  <script src="firebase-config.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // If already logged in, redirect to app
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    const form = document.getElementById('login-form');
+    const errorEl = document.getElementById('error');
+    const loadingEl = document.getElementById('loading');
+    const btnEl = document.getElementById('login-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      errorEl.textContent = '';
+      loadingEl.style.display = 'block';
+      btnEl.disabled = true;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // Auth state change will redirect
+      } catch (err) {
+        let msg = 'Something went wrong. Try again.';
+        if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+          msg = 'Wrong email or password';
+        } else if (err.code === 'auth/invalid-email') {
+          msg = 'That email doesn\'t look right';
+        } else if (err.code === 'auth/too-many-requests') {
+          msg = 'Too many tries. Wait a bit and try again.';
+        }
+        errorEl.textContent = msg;
+        loadingEl.style.display = 'none';
+        btnEl.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
